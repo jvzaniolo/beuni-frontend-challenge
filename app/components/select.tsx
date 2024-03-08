@@ -1,7 +1,7 @@
 export function Select(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <select
-      className="px-3 py-1.5 shadow-sm rounded-lg border border-zinc-300 text-sm appearance-none"
+      className="appearance-none rounded-lg border border-zinc-300 py-1.5 px-3 text-sm shadow-sm"
       {...props}
     />
   )

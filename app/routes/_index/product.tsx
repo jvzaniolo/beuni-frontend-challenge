@@ -3,7 +3,7 @@ import { classNames } from '~/utils'
 
 export function Product({ product }) {
   return (
-    <li className="rounded-xl p-4 hover:bg-zinc-100 transition-colors">
+    <li className="rounded-xl p-4 transition-colors hover:bg-zinc-100">
       {product.image.map((img) => (
         <img
           key={img.id}
@@ -22,7 +22,7 @@ export function Product({ product }) {
               key={rating}
               className={classNames(
                 product.rating > rating ? 'text-yellow-400' : 'text-gray-200',
-                'h-5 w-5 flex-shrink-0'
+                'h-5 w-5 flex-shrink-0',
               )}
               aria-hidden="true"
             />

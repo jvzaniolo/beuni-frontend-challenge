@@ -41,7 +41,7 @@ type Product = {
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const data: { product: Product } = await fetch(
-    `https://api.beuni.com.br/atlas/brands/v2/products/${params.id}`
+    `https://api.beuni.com.br/atlas/brands/v2/products/${params.id}`,
   ).then((res) => res.json())
 
   return json(data)
