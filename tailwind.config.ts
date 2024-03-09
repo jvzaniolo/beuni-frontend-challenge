@@ -1,3 +1,14 @@
-// Using Tailwind CSS v4 alpha
-// Which doesn't require a tailwind.config file
-// But for the VSCode extension to work, this file needs to exist for now
+import type { Config } from 'tailwindcss'
+import defaultTheme from 'tailwindcss/defaultTheme'
+
+export default {
+  content: ['./app/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+      },
+    },
+  },
+  plugins: [],
+} satisfies Config
