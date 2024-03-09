@@ -1,57 +1,91 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
-import { Form, json, useLoaderData, useSearchParams } from '@remix-run/react'
+import {
+  Form,
+  json,
+  useLoaderData,
+  useNavigation,
+  useSearchParams,
+} from '@remix-run/react'
+import { Input } from '~/components/input'
+import { Label } from '~/components/label'
 import { Button } from '~/components/button'
 import { Select } from '~/components/select'
+import { Product as ProductType } from '~/types'
 import { Product } from './product'
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'New Remix App' },
-    { name: 'description', content: 'Welcome to Remix!' },
+    { title: 'BeUni - Produtos' },
+    {
+      name: 'description',
+      content: 'Encontre os melhores brindes personalizados para sua empresa.',
+    },
   ]
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url)
-  const sortBy = url.searchParams.get('sortBy')
-  const data = await fetch(
-    `https://api.beuni.com.br/atlas/brands/v2/products?sortBy=${sortBy}`
+  url.searchParams.set('perPage', '10')
+
+  const data: { products: ProductType[] } = await fetch(
+    `https://api.beuni.com.br/atlas/brands/v2/products?${url.searchParams}`,
   ).then((res) => res.json())
 
   return json(data)
 }
 
 export default function HomePage() {
+  const navigation = useNavigation()
   const [searchParams] = useSearchParams()
   const data = useLoaderData<typeof loader>()
 
-  return (
-    <div className="container mx-auto px-4 pt-10">
-      <h1 className="text-3xl font-semibold mb-8">Product list page</h1>
+  const isFiltering =
+    navigation.state === 'loading' && navigation.formData?.has('filter')
 
-      <Form className="flex gap-3 items-end mb-8 justify-end">
-        <div className="flex flex-col">
-          <label htmlFor="sortBy" className="text-sm mb-1.5 pl-1">
-            Sort by
-          </label>
+  return (
+    <div className="container mx-auto px-4 pb-8 pt-2">
+      <h1 className="mb-2 text-2xl font-semibold md:text-3xl">Produtos</h1>
+      <p className="mb-8 text-base tracking-wide text-zinc-950/55 md:text-lg">
+        Encontre os melhores brindes personalizados para sua empresa.
+      </p>
+
+      <Form className="mb-8 flex flex-wrap items-end gap-3">
+        <div className="flex w-full flex-col sm:max-w-xs">
+          <Label htmlFor="search">Pesquisar</Label>
+          <Input
+            id="search"
+            name="q"
+            type="search"
+            placeholder='Pesquise por "tênis" ou "camiseta"'
+          />
+        </div>
+
+        <div className="flex grow flex-col sm:grow-0">
+          <Label htmlFor="sortBy">Ordenar por</Label>
           <Select
             id="sortBy"
             name="sortBy"
             defaultValue={searchParams.get('sortBy') || 'featured'}
           >
-            <option value="featured">Featured</option>
-            <option value="price-asc">Price Asc</option>
-            <option value="price-desc">Price Desc</option>
+            <option value="featured">Recomendados</option>
+            <option value="price-asc">Preço ascendente</option>
+            <option value="price-desc">Preço descendente</option>
           </Select>
         </div>
 
-        <Button type="submit">Filter</Button>
+        <Button type="submit" name="filter" disabled={isFiltering}>
+          {isFiltering ? 'Pesquisando...' : 'Pesquisar'}
+        </Button>
       </Form>
 
-      <ul className="grid grid-cols-4 gap-2">
-        {data.products.map((product) => (
-          <Product key={product.id} product={product} />
-        ))}
+      <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {data.products.length > 0 ? (
+          data.products.map((product) => (
+            <Product key={product.id} product={product} />
+          ))
+        ) : (
+          <p>Nenhum produto encontrado.</p>
+        )}
       </ul>
     </div>
   )

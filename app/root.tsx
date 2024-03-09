@@ -32,7 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <header className="container mx-auto px-4 py-6">
-          <div className="text-4xl">
+          <div className="text-3xl">
             <span className="font-semibold">be</span>
             <span className="font-bold text-orange-500">uni</span>
           </div>
