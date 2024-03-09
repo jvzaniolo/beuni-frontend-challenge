@@ -3,7 +3,7 @@ import tailwindForms from '@tailwindcss/forms'
 import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {
-  content: ['./app/**/*.{js,ts,jsx,tsx}'],
+  content: ['./app/**/*.{js,ts,jsx,tsx}', './app/routes/$.tsx'],
   theme: {
     extend: {
       fontFamily: {
