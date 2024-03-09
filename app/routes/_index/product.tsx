@@ -19,7 +19,7 @@ export function Product({ product }: { product: Product }) {
         </div>
 
         <div className="px-3 pb-3 pt-4">
-          <p className="mb-2 text-base font-semibold md:text-lg">
+          <p className="mb-2 text-base font-medium md:text-lg">
             {product.name}
           </p>
           <p className="mb-4 flex">
