@@ -1,12 +1,16 @@
 import { Link } from '@remix-run/react'
 import { StarIcon } from '@heroicons/react/20/solid'
-import type { Product } from '~/types'
+import type { Product } from '~/products'
 import { classNames } from '~/utils'
 
 export function Product({ product }: { product: Product }) {
   return (
     <li className="group rounded-xl p-4 transition-colors hover:bg-zinc-50">
-      <Link to={`/product/${product.id}`}>
+      <Link
+        to={`/product/${product.id}`}
+        prefetch="intent"
+        unstable_viewTransition
+      >
         <div className="overflow-hidden rounded-lg bg-zinc-100">
           <img
             key={product.image[0].id}
@@ -15,6 +19,9 @@ export function Product({ product }: { product: Product }) {
             src={product.image[0].url}
             alt=""
             className="h-52 w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+            style={{
+              viewTransitionName: `product-image-${product.id}`,
+            }}
           />
         </div>
 
@@ -35,15 +42,20 @@ export function Product({ product }: { product: Product }) {
             ))}
           </p>
 
-          <p className="mb-4 line-clamp-2 overflow-hidden">
+          <p
+            className="mb-4 line-clamp-2 overflow-hidden"
+            title={product.description}
+          >
             {product.description}
           </p>
 
           <footer className="flex items-end justify-between">
             <div className="flex flex-col gap-1">
-              <span className="text-xs font-light text-green-500 md:text-sm">
-                {product.hasFreeShipping ? 'Frete grátis' : null}
-              </span>
+              {product.hasFreeShipping ? (
+                <span className="text-xs text-orange-500 md:text-sm">
+                  Frete grátis
+                </span>
+              ) : null}
 
               <span className="text-lg font-medium md:text-xl">
                 {new Intl.NumberFormat('pt', {

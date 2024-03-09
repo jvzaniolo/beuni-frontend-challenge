@@ -1,5 +1,4 @@
-import { LinksFunction } from '@remix-run/node'
-import './app.css'
+import type { LinksFunction } from '@remix-run/node'
 import {
   Links,
   Meta,
@@ -7,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react'
+import './tailwind.css'
 
 export const links: LinksFunction = () => [
   {
@@ -17,7 +17,7 @@ export const links: LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-br">
+    <html lang="pt-br" className="h-full">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,7 +30,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="flex h-full flex-col">
         <header className="container mx-auto px-8 py-6">
           <div className="text-3xl">
             <span className="font-semibold">be</span>
@@ -38,7 +38,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
         {children}
-        <footer className="container relative mx-auto px-8 before:absolute before:inset-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-zinc-200 before:to-transparent">
+        <footer className="container relative mx-auto mt-auto px-8 before:absolute before:inset-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-zinc-200 before:to-transparent">
           <div className="flex items-center justify-between py-6">
             <div className="text-3xl">
               <span className="font-semibold">be</span>
