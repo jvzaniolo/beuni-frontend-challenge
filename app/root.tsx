@@ -31,13 +31,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <header className="container mx-auto px-4 py-6">
+        <header className="container mx-auto px-8 py-6">
           <div className="text-3xl">
             <span className="font-semibold">be</span>
             <span className="font-bold text-orange-500">uni</span>
           </div>
         </header>
         {children}
+        <footer className="container relative mx-auto px-8 before:absolute before:inset-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-zinc-200 before:to-transparent">
+          <div className="flex items-center justify-between py-6">
+            <div className="text-3xl">
+              <span className="font-semibold">be</span>
+              <span className="font-bold text-orange-500">uni</span>
+            </div>
+
+            <p className="text-sm text-black/40">
+              © 2024 BeUni - Todos os direitos reservados.
+            </p>
+          </div>
+        </footer>
         <ScrollRestoration />
         <Scripts />
       </body>
