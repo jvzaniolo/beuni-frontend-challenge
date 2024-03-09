@@ -1,48 +1,25 @@
+import {
+  ShoppingCartIcon,
+  StarIcon,
+  TruckIcon,
+} from '@heroicons/react/20/solid'
 import type { LoaderFunctionArgs } from '@remix-run/node'
-import { json, useLoaderData } from '@remix-run/react'
-
-type Product = {
-  id: number
-  name: string
-  slug: string
-  description: string
-  categories: string[]
-  brand: string | null
-  supplier: string
-  image: { id: number; url: string }[]
-  hasFreeShipping: boolean
-  price: number
-  rating: number
-  recordId: string
-  colorOptions: string[]
-  priceLists: { id: number; price: number; minimumQuantity: number }[]
-  total_stock: number
-}
-
-// product: {
-//   id: 192,
-//   name: 'Cartela de Adesivo A5',
-//   slug: 192,
-//   description: 'Cartela de Adesivo / Sticker tamanho a5 (210 x 148 mm) com até 9 adesivos coloridos e destacáveis.\n' +
-//     '\n',
-//   categories: [ 'rec6cM5duZjFkh0Gh' ],
-//   brand: null,
-//   supplier: 'reckLbWWkng2dCFXt',
-//   image: [ [Object] ],
-//   hasFreeShipping: true,
-//   price: 9.898,
-//   rating: 5,
-//   recordId: 'recM4QWHwI4asGjBc',
-//   colorOptions: [ 'primary', 'success', 'warning', 'danger', 'info' ],
-//   priceLists: [ [Object] ],
-//   minimumQuantity: 50,
-//   total_stock: 0
-// }
+import {
+  isRouteErrorResponse,
+  json,
+  useLoaderData,
+  useParams,
+  useRouteError,
+} from '@remix-run/react'
+import { classNames } from '~/utils'
+import { getProductById } from '~/products'
+import { Button } from '~/components/button'
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const data: { product: Product } = await fetch(
-    `https://api.beuni.com.br/atlas/brands/v2/products/${params.id}`,
-  ).then((res) => res.json())
+  if (!params.id) {
+    throw new Response('Parâmetro `id` é obrigatório', { status: 404 })
+  }
+  const data = await getProductById(params.id)
 
   return json(data)
 }
@@ -51,8 +28,87 @@ export default function ProductPage() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <div>
-      <h1>Product {data.product.name}</h1>
+    <div className="container mx-auto px-8 pb-16 pt-2">
+      <section className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:gap-12">
+        <div className="flex max-h-96 items-center justify-center overflow-hidden rounded bg-zinc-200 md:max-h-[35rem]">
+          <img
+            src={data.product.image[0].url}
+            alt={data.product.name}
+            className="h-full w-full object-cover"
+            style={{
+              viewTransitionName: `product-image-${data.product.id}`,
+            }}
+          />
+        </div>
+
+        <div className="max-w-lg">
+          <h1 className="mb-3 text-pretty text-2xl font-semibold lg:text-3xl">
+            {data.product.name}
+          </h1>
+          <p className="mb-3 text-2xl lg:text-3xl">
+            <span className="sr-only">Preço</span>
+            <span>
+              {new Intl.NumberFormat('pt-br', {
+                style: 'currency',
+                currency: 'BRL',
+              }).format(data.product.price)}
+            </span>
+          </p>
+          <p className="mb-5 flex">
+            <span className="sr-only">Review</span>
+            {[0, 1, 2, 3, 4].map((rating) => (
+              <StarIcon
+                key={rating}
+                className={classNames(
+                  data.product.rating > rating
+                    ? 'text-yellow-400'
+                    : 'text-gray-200',
+                  'h-4 w-4 flex-shrink-0 md:h-5 md:w-5',
+                )}
+                aria-hidden="true"
+              />
+            ))}
+          </p>
+
+          <p className="text-zinc-700">{data.product.description}</p>
+          <p className="mt-2 text-zinc-700">
+            Quantidade mínima: {data.product.minimumQuantity}
+          </p>
+
+          <div className="mt-12 flex items-center gap-4">
+            <Button>
+              <ShoppingCartIcon className="h-5 w-5" />
+              Adicionar ao carrinho
+            </Button>
+
+            {data.product.hasFreeShipping ? (
+              <p className="flex items-center gap-2 text-orange-500">
+                <TruckIcon className="h-5 w-5" />
+                Frete grátis
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </section>
     </div>
   )
+}
+
+export function ErrorBoundary() {
+  const params = useParams()
+  const error = useRouteError()
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div className="container mx-auto px-8 pb-8 pt-2">
+        <h1 className="mb-2 text-2xl font-semibold md:text-3xl">
+          Produto {params.id}
+        </h1>
+        <p>{error.data}</p>
+        <div className="mt-8">
+          <Button to="/">Voltar para a página inicial</Button>
+        </div>
+      </div>
+    )
+  }
 }

@@ -1,16 +1,18 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 import {
   Form,
+  isRouteErrorResponse,
   json,
   useLoaderData,
   useNavigation,
+  useRouteError,
   useSearchParams,
 } from '@remix-run/react'
 import { Input } from '~/components/input'
 import { Label } from '~/components/label'
 import { Button } from '~/components/button'
 import { Select } from '~/components/select'
-import { Product as ProductType } from '~/types'
+import { getProducts } from '~/products'
 import { Product } from './product'
 
 export const meta: MetaFunction = () => {
@@ -25,12 +27,7 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url)
-  url.searchParams.set('perPage', '10')
-
-  const data: { products: ProductType[] } = await fetch(
-    `https://api.beuni.com.br/atlas/brands/v2/products?${url.searchParams}`,
-  ).then((res) => res.json())
-
+  const data = await getProducts(url.searchParams)
   return json(data)
 }
 
@@ -91,4 +88,25 @@ export default function HomePage() {
       </ul>
     </div>
   )
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError()
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div className="container mx-auto px-8 pb-8 pt-2">
+        <h1 className="mb-2 text-2xl font-semibold md:text-3xl">Produtos</h1>
+        <p className="mb-8 text-base tracking-wide text-zinc-950/55 md:text-lg">
+          Encontre os melhores brindes personalizados para sua empresa.
+        </p>
+        <p>{error.data}</p>
+        <div className="mt-8">
+          <Button to="/" replace>
+            Tente novamente
+          </Button>
+        </div>
+      </div>
+    )
+  }
 }
