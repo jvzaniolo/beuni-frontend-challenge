@@ -21,7 +21,6 @@ export function Pagination({
           search: `?${changePage(searchParams, currentPage - 1)}`,
         }}
         prefetch="intent"
-        preventScrollReset
         aria-disabled={!shouldGoBackwards}
         className="aria-disabled:pointer-events-none aria-disabled:opacity-60"
       >
@@ -34,7 +33,6 @@ export function Pagination({
             search: `?${changePage(searchParams, pageNumber)}`,
           }}
           prefetch="intent"
-          preventScrollReset
           aria-current={currentPage === pageNumber ? 'page' : undefined}
           aria-disabled={currentPage === pageNumber}
           className="aria-disabled:pointer-events-none aria-[current=page]:font-bold aria-[current=page]:text-orange-500"
@@ -47,7 +45,6 @@ export function Pagination({
           search: `?${changePage(searchParams, currentPage + 1)}`,
         }}
         prefetch="intent"
-        preventScrollReset
         aria-disabled={!shouldGoForward}
         className="aria-disabled:pointer-events-none aria-disabled:opacity-60"
       >
