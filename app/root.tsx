@@ -1,5 +1,6 @@
 import type { LinksFunction } from '@remix-run/node'
 import {
+  Link,
   Links,
   Meta,
   Outlet,
@@ -7,6 +8,7 @@ import {
   ScrollRestoration,
 } from '@remix-run/react'
 import './tailwind.css'
+import { Toaster } from 'sonner'
 
 export const links: LinksFunction = () => [
   {
@@ -32,10 +34,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className="flex h-full flex-col">
         <header className="container mx-auto px-8 py-6">
-          <div className="text-3xl">
+          <Link to="/" className="text-3xl">
             <span className="font-semibold">be</span>
             <span className="font-bold text-orange-500">uni</span>
-          </div>
+          </Link>
         </header>
         {children}
         <footer className="container relative mx-auto mt-auto px-8 before:absolute before:inset-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-zinc-200 before:to-transparent">
@@ -50,6 +52,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </p>
           </div>
         </footer>
+        <Toaster position="top-right" />
         <ScrollRestoration />
         <Scripts />
       </body>

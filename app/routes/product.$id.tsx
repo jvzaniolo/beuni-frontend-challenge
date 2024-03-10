@@ -1,9 +1,10 @@
+import { toast } from 'sonner'
 import {
   ShoppingCartIcon,
   StarIcon,
   TruckIcon,
 } from '@heroicons/react/20/solid'
-import type { LoaderFunctionArgs } from '@remix-run/node'
+import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 import {
   isRouteErrorResponse,
   json,
@@ -15,12 +16,23 @@ import { classNames } from '~/utils'
 import { getProductById } from '~/products'
 import { Button } from '~/components/button'
 
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [
+    {
+      title: `${data?.product.name} | BeUni`,
+    },
+    {
+      name: 'description',
+      content: data?.product.description,
+    },
+  ]
+}
+
 export async function loader({ params }: LoaderFunctionArgs) {
   if (!params.id) {
     throw new Response('Parâmetro `id` é obrigatório', { status: 404 })
   }
   const data = await getProductById(params.id)
-
   return json(data)
 }
 
@@ -76,7 +88,13 @@ export default function ProductPage() {
           </p>
 
           <div className="mt-12 flex items-center gap-4">
-            <Button>
+            <Button
+              onClick={() =>
+                toast.success('Item adicionado ao carrinho!', {
+                  duration: 3000,
+                })
+              }
+            >
               <ShoppingCartIcon className="h-5 w-5" />
               Adicionar ao carrinho
             </Button>

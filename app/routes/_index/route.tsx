@@ -71,8 +71,13 @@ export default function HomePage() {
             </Select>
           </div>
 
-          <Button type="submit" name="filter" disabled={isFiltering}>
-            {isFiltering ? 'Pesquisando...' : 'Pesquisar'}
+          <Button
+            type="submit"
+            name="filter"
+            disabled={isFiltering}
+            aria-busy={isFiltering ? 'true' : 'false'}
+          >
+            Pesquisar
           </Button>
         </Form>
       </div>
