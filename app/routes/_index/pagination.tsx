@@ -22,7 +22,7 @@ export function Pagination({
         }}
         prefetch="intent"
         aria-disabled={!shouldGoBackwards}
-        className="rounded-lg px-3 py-2 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-disabled:opacity-60"
+        className="rounded-lg px-3 py-2 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-disabled:opacity-50"
       >
         Anterior
       </Link>
@@ -46,7 +46,7 @@ export function Pagination({
         }}
         prefetch="intent"
         aria-disabled={!shouldGoForward}
-        className="rounded-lg px-3 py-2 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-disabled:opacity-60"
+        className="rounded-lg px-3 py-2 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-disabled:opacity-50"
       >
         Próximo
       </Link>

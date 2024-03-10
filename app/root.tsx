@@ -1,14 +1,15 @@
 import type { LinksFunction } from '@remix-run/node'
 import {
-  Link,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react'
-import './tailwind.css'
 import { Toaster } from 'sonner'
+import { Logo } from './components/logo'
+import { Header } from './components/header'
+import './tailwind.css'
 
 export const links: LinksFunction = () => [
   {
@@ -33,19 +34,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="flex h-full flex-col">
-        <header className="container mx-auto px-8 py-6">
-          <Link to="/" className="text-3xl">
-            <span className="font-semibold">be</span>
-            <span className="font-bold text-orange-500">uni</span>
-          </Link>
-        </header>
+        <Header />
+
         {children}
+
         <footer className="container relative mx-auto mt-auto px-8 before:absolute before:inset-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-zinc-200 before:to-transparent">
           <div className="flex flex-col justify-between gap-8 py-6 md:flex-row md:items-center">
-            <div className="text-3xl">
-              <span className="font-semibold">be</span>
-              <span className="font-bold text-orange-500">uni</span>
-            </div>
+            <Logo />
 
             <p className="text-sm text-black/50">
               © 2024 BeUni - Todos os direitos reservados.
