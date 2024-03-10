@@ -23,5 +23,3 @@ Run the Vite dev server:
 ```shellscript
 npm run dev
 ```
-
-## Considerations
