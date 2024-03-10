@@ -15,14 +15,14 @@ export function Pagination({
   })
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1">
       <Link
         to={{
-          search: `?${changePage(searchParams, currentPage - 1)}`,
+          search: `?${setPageSearchParam(searchParams, currentPage - 1)}`,
         }}
         prefetch="intent"
         aria-disabled={!shouldGoBackwards}
-        className="aria-disabled:pointer-events-none aria-disabled:opacity-60"
+        className="rounded-lg px-3 py-2 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-disabled:opacity-60"
       >
         Anterior
       </Link>
@@ -30,23 +30,23 @@ export function Pagination({
         <Link
           key={pageNumber}
           to={{
-            search: `?${changePage(searchParams, pageNumber)}`,
+            search: `?${setPageSearchParam(searchParams, pageNumber)}`,
           }}
           prefetch="intent"
           aria-current={currentPage === pageNumber ? 'page' : undefined}
           aria-disabled={currentPage === pageNumber}
-          className="aria-disabled:pointer-events-none aria-[current=page]:font-bold aria-[current=page]:text-orange-500"
+          className="rounded-lg px-3 py-1.5 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-[current=page]:font-semibold aria-[current=page]:text-orange-500 aria-[current=page]:outline aria-[current=page]:outline-2 aria-[current=page]:outline-orange-500"
         >
           {pageNumber}
         </Link>
       ))}
       <Link
         to={{
-          search: `?${changePage(searchParams, currentPage + 1)}`,
+          search: `?${setPageSearchParam(searchParams, currentPage + 1)}`,
         }}
         prefetch="intent"
         aria-disabled={!shouldGoForward}
-        className="aria-disabled:pointer-events-none aria-disabled:opacity-60"
+        className="rounded-lg px-3 py-2 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-disabled:opacity-60"
       >
         Próximo
       </Link>
@@ -54,7 +54,7 @@ export function Pagination({
   )
 }
 
-function changePage(searchParams: URLSearchParams, page: number) {
+function setPageSearchParam(searchParams: URLSearchParams, page: number) {
   const currentParams = new URLSearchParams(searchParams)
   currentParams.set('page', String(page))
   return currentParams
