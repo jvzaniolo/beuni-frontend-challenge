@@ -55,6 +55,7 @@ export default function HomePage() {
               name="q"
               type="search"
               placeholder='Pesquise por "tênis" ou "camiseta"'
+              defaultValue={searchParams.get('q') || ''}
             />
           </div>
 
