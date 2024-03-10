@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from '@remix-run/react'
 import { Toaster } from 'sonner'
 import { Logo } from './components/logo'
@@ -19,6 +20,8 @@ export const links: LinksFunction = () => [
 ]
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const location = useLocation()
+
   return (
     <html lang="pt-br" className="h-full">
       <head>
@@ -34,7 +37,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="flex h-full flex-col">
-        <Header />
+        <Header animate={location.pathname === '/'} />
 
         {children}
 
