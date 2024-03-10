@@ -47,7 +47,7 @@ export default function HomePage() {
           Encontre os melhores brindes personalizados para sua empresa.
         </p>
 
-        <Form className="mb-8 flex flex-wrap items-end gap-3">
+        <Form className="mb-8 flex flex-wrap items-end gap-4">
           <div className="flex w-full flex-col sm:max-w-xs">
             <Label htmlFor="search">Pesquisar</Label>
             <Input

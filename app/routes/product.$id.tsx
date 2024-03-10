@@ -87,7 +87,7 @@ export default function ProductPage() {
             Quantidade mínima: {data.product.minimumQuantity}
           </p>
 
-          <div className="mt-12 flex items-center gap-4">
+          <div className="mt-12 flex flex-col-reverse gap-4 md:flex-row md:items-center">
             <Button
               onClick={() =>
                 toast.success('Item adicionado ao carrinho!', {

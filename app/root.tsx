@@ -41,7 +41,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </header>
         {children}
         <footer className="container relative mx-auto mt-auto px-8 before:absolute before:inset-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-zinc-200 before:to-transparent">
-          <div className="flex items-center justify-between py-6">
+          <div className="flex flex-col justify-between gap-8 py-6 md:flex-row md:items-center">
             <div className="text-3xl">
               <span className="font-semibold">be</span>
               <span className="font-bold text-orange-500">uni</span>
