@@ -41,8 +41,6 @@ export default function HomePage() {
   const isSearching =
     navigation.state === 'loading' && navigation.formData?.has('search')
 
-  console.log(searchParams.get('page'))
-
   return (
     <div className="container mx-auto px-4 pb-8 pt-2">
       <div className="px-4">
