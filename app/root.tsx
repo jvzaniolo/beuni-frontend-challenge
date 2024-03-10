@@ -47,7 +47,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <span className="font-bold text-orange-500">uni</span>
             </div>
 
-            <p className="text-sm text-black/40">
+            <p className="text-sm text-black/50">
               © 2024 BeUni - Todos os direitos reservados.
             </p>
           </div>
