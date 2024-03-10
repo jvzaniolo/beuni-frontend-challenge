@@ -14,6 +14,7 @@ import { Button } from '~/components/button'
 import { Select } from '~/components/select'
 import { getProducts } from '~/products'
 import { Product } from './product'
+import { Pagination } from './pagination'
 
 export const meta: MetaFunction = () => {
   return [
@@ -27,6 +28,7 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url)
+  url.searchParams.set('perPage', '12')
   const data = await getProducts(url.searchParams)
   return json(data)
 }
@@ -36,8 +38,10 @@ export default function HomePage() {
   const [searchParams] = useSearchParams()
   const data = useLoaderData<typeof loader>()
 
-  const isFiltering =
-    navigation.state === 'loading' && navigation.formData?.has('filter')
+  const isSearching =
+    navigation.state === 'loading' && navigation.formData?.has('search')
+
+  console.log(searchParams.get('page'))
 
   return (
     <div className="container mx-auto px-4 pb-8 pt-2">
@@ -49,9 +53,9 @@ export default function HomePage() {
 
         <Form className="mb-8 flex flex-wrap items-end gap-4">
           <div className="flex w-full flex-col sm:max-w-xs">
-            <Label htmlFor="search">Pesquisar</Label>
+            <Label htmlFor="query">Pesquisar</Label>
             <Input
-              id="search"
+              id="query"
               name="q"
               type="search"
               placeholder='Pesquise por "tênis" ou "camiseta"'
@@ -74,9 +78,9 @@ export default function HomePage() {
 
           <Button
             type="submit"
-            name="filter"
-            disabled={isFiltering}
-            aria-busy={isFiltering ? 'true' : 'false'}
+            name="search"
+            disabled={isSearching}
+            aria-busy={isSearching ? 'true' : 'false'}
           >
             Pesquisar
           </Button>
@@ -89,9 +93,17 @@ export default function HomePage() {
             <Product key={product.id} product={product} />
           ))
         ) : (
-          <p>Nenhum produto encontrado.</p>
+          <p className="px-4">Nenhum produto encontrado.</p>
         )}
       </ul>
+
+      <div className="my-8 flex justify-center">
+        <Pagination
+          currentPage={Number(searchParams.get('page')) || 1}
+          total={data.total}
+          searchParams={searchParams}
+        />
+      </div>
     </div>
   )
 }

@@ -10,6 +10,7 @@ export function Product({ product }: { product: Product }) {
         to={`/product/${product.id}`}
         prefetch="intent"
         unstable_viewTransition
+        className="flex h-full flex-col"
       >
         <div className="overflow-hidden rounded-lg bg-zinc-100">
           <img
@@ -25,7 +26,7 @@ export function Product({ product }: { product: Product }) {
           />
         </div>
 
-        <div className="px-3 pb-3 pt-4">
+        <div className="flex flex-1 flex-col px-3 pb-3 pt-4">
           <p className="mb-2 text-base font-medium md:text-lg">
             {product.name}
           </p>
@@ -49,7 +50,7 @@ export function Product({ product }: { product: Product }) {
             {product.description}
           </p>
 
-          <footer className="flex items-end justify-between">
+          <footer className="mt-auto flex items-end justify-between">
             <div className="flex flex-col gap-1">
               {product.hasFreeShipping ? (
                 <span className="text-xs text-orange-500 md:text-sm">

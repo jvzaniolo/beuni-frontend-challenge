@@ -17,7 +17,7 @@ export async function getProducts(searchParams: URLSearchParams) {
   if (!res.ok) {
     throw new Response('Falha ao carregar produtos.', { status: 500 })
   }
-  const data: { products: Product[] } = await res.json()
+  const data: { products: Product[]; total: number } = await res.json()
   return data
 }
 
