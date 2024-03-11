@@ -23,3 +23,21 @@ Run the Vite dev server:
 ```shellscript
 npm run dev
 ```
+
+## Build and Serve
+
+Build the project:
+
+```shellscript
+npm run build
+```
+
+Serve the project:
+
+```shellscript
+npm start
+```
+
+## Author
+
+- [João Vitor Zaniolo](https://jvzaniolo.vercel.app/)
