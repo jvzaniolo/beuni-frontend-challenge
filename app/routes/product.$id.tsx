@@ -42,7 +42,7 @@ export default function ProductPage() {
   return (
     <div className="container mx-auto px-8 pb-16 pt-2">
       <section className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:gap-12">
-        <div className="flex max-h-96 items-center justify-center overflow-hidden rounded bg-zinc-200 md:max-h-[35rem]">
+        <div className="flex max-h-96 items-center justify-center overflow-hidden rounded-lg bg-zinc-200 md:max-h-[35rem]">
           <img
             src={data.product.image[0].url}
             alt={data.product.name}
