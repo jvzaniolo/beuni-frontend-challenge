@@ -22,7 +22,7 @@ export function Pagination({
         }}
         prefetch="intent"
         aria-disabled={!shouldGoBackwards}
-        className="rounded-lg px-3 py-2 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-disabled:opacity-50"
+        className="rounded-lg px-3 py-2 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-disabled:opacity-50 md:text-sm"
       >
         Anterior
       </Link>
@@ -35,7 +35,7 @@ export function Pagination({
           prefetch="intent"
           aria-current={currentPage === pageNumber ? 'page' : undefined}
           aria-disabled={currentPage === pageNumber}
-          className="rounded-lg px-3 py-1.5 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-[current=page]:font-semibold aria-[current=page]:text-orange-500 aria-[current=page]:outline aria-[current=page]:outline-2 aria-[current=page]:outline-orange-500"
+          className="rounded-lg px-3 py-1.5 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-[current=page]:font-semibold aria-[current=page]:text-orange-500 aria-[current=page]:outline aria-[current=page]:outline-2 aria-[current=page]:outline-orange-500 md:text-sm"
         >
           {pageNumber}
         </Link>
@@ -46,7 +46,7 @@ export function Pagination({
         }}
         prefetch="intent"
         aria-disabled={!shouldGoForward}
-        className="rounded-lg px-3 py-2 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-disabled:opacity-50"
+        className="rounded-lg px-3 py-2 tabular-nums transition-colors hover:bg-zinc-100 aria-disabled:pointer-events-none aria-disabled:opacity-50 md:text-sm"
       >
         Próximo
       </Link>
