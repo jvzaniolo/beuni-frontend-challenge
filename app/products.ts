@@ -17,8 +17,22 @@ export async function getProducts(searchParams: URLSearchParams) {
   if (!res.ok) {
     throw new Response('Falha ao carregar produtos.', { status: 500 })
   }
-  const data: { products: Product[]; total: number } = await res.json()
-  return data
+  const data = await res.json()
+
+  return {
+    total: data.total,
+    products: data.products.map((product: Product) => ({
+      name: product.name,
+      id: product.id,
+      price: product.price,
+      description: product.description,
+      total_stock: product.total_stock,
+      rating: product.rating,
+      minimumQuantity: product.minimumQuantity,
+      hasFreeShipping: product.hasFreeShipping,
+      image: product.image,
+    })),
+  } as { products: Product[]; total: number }
 }
 
 export async function getProductById(id: string) {
@@ -30,6 +44,18 @@ export async function getProductById(id: string) {
       status: 500,
     })
   }
-  const data: { product: Product } = await res.json()
-  return data
+  const data = await res.json()
+  return {
+    product: {
+      name: data.product.name,
+      id: data.product.id,
+      price: data.product.price,
+      description: data.product.description,
+      total_stock: data.product.total_stock,
+      rating: data.product.rating,
+      minimumQuantity: data.product.minimumQuantity,
+      hasFreeShipping: data.product.hasFreeShipping,
+      image: data.product.image,
+    },
+  } as { product: Product }
 }
