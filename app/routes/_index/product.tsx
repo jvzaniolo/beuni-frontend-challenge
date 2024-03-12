@@ -1,6 +1,6 @@
-import { Link } from '@remix-run/react'
 import { StarIcon } from '@heroicons/react/20/solid'
-import type { Product } from '~/products'
+import { Link } from '@remix-run/react'
+import { type Product } from '~/products'
 import { classNames } from '~/utils'
 
 export function Product({ product }: { product: Product }) {
