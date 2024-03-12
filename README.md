@@ -2,6 +2,10 @@
 
 This is a frontend challenge for BeUni open position for full-stack developer.
 
+Instructions can be found in this Notion document
+
+https://beuni-tecnologia.notion.site/Teste-T-cnico-2024-Frontend-856532b510604bf18217eb8300d1a504
+
 ## Technologies
 
 - [Vite](https://vitejs.dev/)
