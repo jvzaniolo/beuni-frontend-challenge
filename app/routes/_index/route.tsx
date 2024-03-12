@@ -36,7 +36,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function HomePage() {
   const navigation = useNavigation()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const data = useLoaderData<typeof loader>()
 
   const isSearching =
@@ -68,6 +68,12 @@ export default function HomePage() {
               id="sortBy"
               name="sortBy"
               defaultValue={searchParams.get('sortBy') || 'featured'}
+              onChange={(e) =>
+                setSearchParams((prev) => {
+                  prev.set('sortBy', e.target.value)
+                  return prev
+                })
+              }
             >
               <option value="featured">Recomendados</option>
               <option value="price-asc">Preço ascendente</option>
