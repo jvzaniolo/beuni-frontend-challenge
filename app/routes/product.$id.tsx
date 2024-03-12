@@ -30,7 +30,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export async function loader({ params }: LoaderFunctionArgs) {
   invariantResponse(params.id, 'Parâmetro `id` é obrigatório')
   const data = await getProductById(params.id)
-  return json(data)
+  return json(data, {
+    headers: {
+      'Cache-Control': 'public, max-age=3600',
+    },
+  })
 }
 
 export default function ProductPage() {
