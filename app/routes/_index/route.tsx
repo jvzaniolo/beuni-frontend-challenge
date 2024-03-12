@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
+import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import {
   Form,
   isRouteErrorResponse,
@@ -8,13 +8,14 @@ import {
   useRouteError,
   useSearchParams,
 } from '@remix-run/react'
+import { Button } from '~/components/button'
 import { Input } from '~/components/input'
 import { Label } from '~/components/label'
-import { Button } from '~/components/button'
 import { Select } from '~/components/select'
 import { getProducts } from '~/products'
-import { Product } from './product'
+import { getErrorMessage } from '~/utils'
 import { Pagination } from './pagination'
+import { Product } from './product'
 
 export const meta: MetaFunction = () => {
   return [
@@ -109,20 +110,21 @@ export default function HomePage() {
 export function ErrorBoundary() {
   const error = useRouteError()
 
-  if (isRouteErrorResponse(error)) {
-    return (
-      <div className="container mx-auto px-8 pb-8 pt-2">
-        <h1 className="mb-2 text-2xl font-semibold md:text-3xl">Produtos</h1>
-        <p className="mb-8 text-base tracking-wide text-zinc-950/55 md:text-lg">
-          Encontre os melhores brindes personalizados para sua empresa.
-        </p>
-        <p>{error.data}</p>
-        <div className="mt-8">
-          <Button to="/" replace>
-            Tente novamente
-          </Button>
-        </div>
+  const errorMessage = isRouteErrorResponse(error)
+    ? error.data
+    : getErrorMessage(error)
+
+  return (
+    <div className="container mx-auto px-8 pb-8 pt-2">
+      <h1 className="mb-2 text-2xl font-semibold md:text-3xl">
+        Algo deu errado :/
+      </h1>
+      <p>{errorMessage}</p>
+      <div className="mt-8">
+        <Button to="/" replace>
+          Tente novamente
+        </Button>
       </div>
-    )
-  }
+    </div>
+  )
 }
