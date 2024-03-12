@@ -4,11 +4,18 @@ import { type Product } from '~/products'
 import { classNames } from '~/utils'
 
 export function Product({ product }: { product: Product }) {
+  function prefetchImage() {
+    const img = new Image()
+    img.src = product.image[0].url
+  }
+
   return (
     <li className="group rounded-xl p-4 transition-colors hover:bg-zinc-50">
       <Link
         to={`/product/${product.id}`}
         prefetch="intent"
+        onFocus={prefetchImage}
+        onMouseEnter={prefetchImage}
         unstable_viewTransition
         className="flex h-full flex-col"
       >
