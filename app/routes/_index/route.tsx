@@ -36,43 +36,21 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return defer({ data: getProducts(url.searchParams) })
 }
 
-export function ErrorBoundary() {
-  const error = useRouteError()
-
-  const errorMessage = isRouteErrorResponse(error)
-    ? error.data
-    : getErrorMessage(error)
-
-  return (
-    <div className="container mx-auto px-8 pb-8 pt-2">
-      <h1 className="mb-2 text-2xl font-semibold md:text-3xl">
-        Algo deu errado :/
-      </h1>
-      <p>{errorMessage}</p>
-      <div className="mt-8">
-        <Button to="/" replace>
-          Tente novamente
-        </Button>
-      </div>
-    </div>
-  )
-}
-
 export default function HomePage() {
   const promise = useLoaderData<typeof loader>()
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (
     <div className="container mx-auto px-4 pb-8 pt-4">
-      <div className="mb-10 flex items-end justify-between px-4">
+      <div className="mb-10 flex flex-col gap-6 px-4 md:flex-row md:items-end md:justify-between">
         <div>
           <h1 className="mb-2 text-2xl font-semibold md:text-3xl">Produtos</h1>
-          <p className="text-base tracking-wide text-zinc-950/55 md:text-lg">
+          <p className="max-w-md text-base tracking-wide text-zinc-950/55 md:text-lg lg:max-w-none">
             Encontre os melhores brindes personalizados para sua empresa.
           </p>
         </div>
 
-        <div className="flex flex-col sm:grow-0">
+        <div className="flex flex-col sm:ml-auto">
           <Label htmlFor="sortBy">Ordenar por</Label>
           <Select
             id="sortBy"
@@ -117,6 +95,28 @@ export default function HomePage() {
           )}
         </Await>
       </Suspense>
+    </div>
+  )
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError()
+
+  const errorMessage = isRouteErrorResponse(error)
+    ? error.data
+    : getErrorMessage(error)
+
+  return (
+    <div className="container mx-auto px-8 pb-8 pt-2">
+      <h1 className="mb-2 text-2xl font-semibold md:text-3xl">
+        Algo deu errado :/
+      </h1>
+      <p>{errorMessage}</p>
+      <div className="mt-8">
+        <Button to="/" replace>
+          Tente novamente
+        </Button>
+      </div>
     </div>
   )
 }
