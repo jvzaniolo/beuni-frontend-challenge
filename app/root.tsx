@@ -1,4 +1,4 @@
-import type { LinksFunction } from '@remix-run/node'
+import { type LinksFunction } from '@remix-run/node'
 import {
   Links,
   Meta,
@@ -8,8 +8,8 @@ import {
   useLocation,
 } from '@remix-run/react'
 import { Toaster } from 'sonner'
-import { Logo } from './components/logo'
 import { Header } from './components/header'
+import { Logo } from './components/logo'
 import './tailwind.css'
 
 export const links: LinksFunction = () => [

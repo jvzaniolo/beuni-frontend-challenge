@@ -1,20 +1,19 @@
-import { toast } from 'sonner'
 import {
   ShoppingCartIcon,
   StarIcon,
   TruckIcon,
 } from '@heroicons/react/20/solid'
-import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
+import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import {
   isRouteErrorResponse,
   json,
   useLoaderData,
-  useParams,
   useRouteError,
 } from '@remix-run/react'
-import { classNames } from '~/utils'
-import { getProductById } from '~/products'
+import { toast } from 'sonner'
 import { Button } from '~/components/button'
+import { getProductById } from '~/products'
+import { classNames, getErrorMessage, invariantResponse } from '~/utils'
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
@@ -29,11 +28,13 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 }
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  if (!params.id) {
-    throw new Response('Parâmetro `id` é obrigatório', { status: 404 })
-  }
+  invariantResponse(params.id, 'Parâmetro `id` é obrigatório')
   const data = await getProductById(params.id)
-  return json(data)
+  return json(data, {
+    headers: {
+      'Cache-Control': 'public, max-age=3600',
+    },
+  })
 }
 
 export default function ProductPage() {
@@ -113,20 +114,21 @@ export default function ProductPage() {
 }
 
 export function ErrorBoundary() {
-  const params = useParams()
   const error = useRouteError()
 
-  if (isRouteErrorResponse(error)) {
-    return (
-      <div className="container mx-auto px-8 pb-8 pt-2">
-        <h1 className="mb-2 text-2xl font-semibold md:text-3xl">
-          Produto {params.id}
-        </h1>
-        <p>{error.data}</p>
-        <div className="mt-8">
-          <Button to="/">Voltar para a página inicial</Button>
-        </div>
+  const errorMessage = isRouteErrorResponse(error)
+    ? error.data
+    : getErrorMessage(error)
+
+  return (
+    <div className="container mx-auto px-8 pb-8 pt-2">
+      <h1 className="mb-2 text-2xl font-semibold md:text-3xl">
+        Algo deu errado :/
+      </h1>
+      <p>{errorMessage}</p>
+      <div className="mt-8">
+        <Button to="/">Voltar para a página inicial</Button>
       </div>
-    )
-  }
+    </div>
+  )
 }
